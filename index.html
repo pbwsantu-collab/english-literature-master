@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a237e" />
+  <meta name="description" content="English Literature Master — Class XI Complete Literature Learning & Question Paper Generator" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>English Literature Master</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>" />
+</head>
+<body>
+  <div class="app-bg"></div>
+  <div class="particles"></div>
+  <div id="app">
+    <section id="landing">
+      <div class="hero-book" aria-hidden="true"></div>
+      <h1 class="hero-title">ENGLISH LITERATURE MASTER</h1>
+      <p class="hero-sub">Class XI • Complete Literature Learning & Question Paper Generator</p>
+      <p class="hero-tag">Read • Understand • Practise • Test • Master</p>
+      <div class="floating-cards" id="floatCards"></div>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-block" id="btnStart">START LEARNING</button>
+        <button class="btn btn-outline btn-block" id="btnQPLanding">QUESTION PAPER GENERATOR</button>
+      </div>
+    </section>
+
+    <div id="mainApp" class="hidden">
+      <header class="topbar no-print">
+        <button class="back-btn" id="btnBack" style="display:none">← Back</button>
+        <div class="topbar-title" id="topTitle">Home</div>
+        <div class="lang-toggle">
+          <button type="button" data-lang="en" class="active">EN</button>
+          <button type="button" data-lang="bn">বাং</button>
+        </div>
+      </header>
+
+      <section class="page active" id="page-home">
+        <h2 class="section-title">📚 Lessons</h2>
+        <div class="lesson-grid" id="lessonGrid"></div>
+        <div class="mt-2 glass" style="padding:1.25rem">
+          <h3 style="margin-bottom:0.6rem">⚡ Quick Actions</h3>
+          <div class="action-row">
+            <button class="btn btn-primary btn-sm" data-nav="qp">Question Paper</button>
+            <button class="btn btn-secondary btn-sm" data-nav="progress">Progress</button>
+            <button class="btn btn-secondary btn-sm" data-nav="search">Search</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-lesson">
+        <div class="lesson-tabs" id="lessonTabs"></div>
+        <div class="glass lesson-content" id="lessonBody"></div>
+      </section>
+
+      <section class="page" id="page-qp">
+        <h2 class="section-title">📄 Question Paper Generator</h2>
+        <div class="glass qp-panel">
+          <h3>Select Lessons</h3>
+          <div class="check-grid" id="qpLessons"></div>
+          <div class="action-row">
+            <button class="btn btn-sm btn-secondary" id="qpSelectAll">Select All</button>
+            <button class="btn btn-sm btn-secondary" id="qpClearAll">Clear All</button>
+          </div>
+        </div>
+        <div class="glass qp-panel">
+          <h3>Question Types</h3>
+          <div class="check-grid" id="qpTypes">
+            <label class="check-item"><input type="checkbox" value="mcq" checked> MCQ</label>
+            <label class="check-item"><input type="checkbox" value="truefalse" checked> True/False</label>
+            <label class="check-item"><input type="checkbox" value="fill" checked> Fill in Blanks</label>
+            <label class="check-item"><input type="checkbox" value="vocabulary"> Vocabulary</label>
+            <label class="check-item"><input type="checkbox" value="saq" checked> Short Answer</label>
+            <label class="check-item"><input type="checkbox" value="broad" checked> Broad Answer</label>
+          </div>
+        </div>
+        <div class="glass qp-panel">
+          <h3>Settings</h3>
+          <div class="settings-row">
+            <label>Total Marks
+              <select id="qpMarks">
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50" selected>50</option>
+                <option value="60">60</option>
+                <option value="80">80</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+            <label>Difficulty
+              <select id="qpDiff">
+                <option value="mixed" selected>Mixed</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </label>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-primary" id="btnGenerate">GENERATE PAPER</button>
+            <button class="btn btn-secondary" id="btnRegenerate" disabled>REGENERATE</button>
+            <button class="btn btn-secondary" id="btnResetQP">RESET</button>
+          </div>
+        </div>
+        <div id="qpPreviewWrap" class="hidden">
+          <div class="action-row no-print mb-2">
+            <button class="btn btn-sm btn-secondary" id="btnPrint">🖨 Print</button>
+            <button class="btn btn-sm btn-secondary" id="btnAnswerKey">VIEW ANSWER KEY</button>
+            <button class="btn btn-sm btn-primary" id="btnStartExam">START EXAM</button>
+          </div>
+          <div class="paper-preview" id="qpPreview"></div>
+          <div id="answerKey" class="glass qp-panel hidden mt-2"></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-exam">
+        <div class="exam-timer no-print">
+          <span>Exam in Progress</span>
+          <span class="time" id="examTime">45:00</span>
+        </div>
+        <div id="examBody"></div>
+        <div class="action-row no-print mt-2">
+          <button class="btn btn-primary btn-block" id="btnSubmitExam">SUBMIT EXAM</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-result">
+        <div class="glass result-card" id="resultCard"></div>
+      </section>
+
+      <section class="page" id="page-progress">
+        <h2 class="section-title">📊 Your Literature Progress</h2>
+        <div class="glass progress-overview" id="progressOverview"></div>
+        <div class="prog-list" id="progressList"></div>
+      </section>
+
+      <section class="page" id="page-search">
+        <h2 class="section-title">🔍 Search</h2>
+        <div class="search-box">
+          <input type="search" id="searchInput" placeholder="Lessons, vocabulary, themes, authors..." autocomplete="off" />
+        </div>
+        <div class="search-results" id="searchResults"></div>
+      </section>
+
+      <nav class="bottom-nav no-print">
+        <button class="nav-item active" data-nav="home"><span class="nav-icon">🏠</span>Home</button>
+        <button class="nav-item" data-nav="qp"><span class="nav-icon">📄</span>Paper</button>
+        <button class="nav-item" data-nav="progress"><span class="nav-icon">📊</span>Progress</button>
+        <button class="nav-item" data-nav="search"><span class="nav-icon">🔍</span>Search</button>
+      </nav>
+    </div>
+  </div>
+
+  <script src="data/garden-party.js"></script>
+  <script src="data/alias-jimmy-valentine.js"></script>
+  <script src="data/nobel-lecture.js"></script>
+  <script src="data/still-i-rise.js"></script>
+  <script src="data/my-last-duchess.js"></script>
+  <script src="data/question-bank.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
